@@ -2,6 +2,7 @@ section .data
     message db "value %d", 10, 13, 0
     debug db "%d ", 0, 13, 0
     NEWLINE db "", 10, 13, 0
+    tests db "hello world", 10, 13, 0
     half_window dd 0 
     max_y dd 0 
     max_x dd 0
@@ -12,6 +13,7 @@ section .data
     total dd 0
     i dd 0
     j dd 0
+    offsetIndex dd 0
 
 
 section .text
@@ -37,6 +39,7 @@ _add:
 
     ; GET POSITIVE HALF WINDOW + 1 [ USED FOR SURROUNDING INDICES OF TARGET ]
     IMUL eax, edx
+    add eax, 1
     mov [max_z], eax
 
     ; Compute Max X
@@ -52,22 +55,25 @@ _add:
 
     mov eax, [half_window]
     mov ebx, [max_y]
+
+    mov esi, ecx
     ; LOOP THROUGH COLUMNS CONTAINING ELEMENTS WE WILL COMPUTE THE AVERAGE OF
     loop1:
-
         ; Preservation 1
         mov [y], eax ; retain y counter for loop1
         mov eax, [half_window]
         mov ebx, [max_x]
 
         loop2:
+            ; RESET total
+            mov DWORD [total], 0
         
             ; COMPUTE FOR AVERAGE 
             ; Preservation 2
             mov [x], eax ; retain x counter for loop1
             mov eax, [half_window_negative]
             mov ebx, [max_z]
-
+            
             loop3:
                 ;loop body
 
@@ -76,18 +82,48 @@ _add:
                 mov eax, [half_window_negative]
                 loop4:
 
-                    ; PRINT VALUE
-                    mov edx, 
-                    push eax
-                    push debug
-                    call _printf
-                    pop eax
-                    pop eax
+                    ; LOOP BODY   
+                    ; Preservation 4
+                    mov [j], eax ; retain j counter 
+                    mov eax, 0
+                    mov ebx, 0
+
+                    ; Local Body
+                    mov eax, [y]
+                    add eax, [i]
+
+                    mov ebx, [x]
+                    add ebx, [j]
+
+                    imul eax, [ebp+12]
+                    add eax, ebx
+
+                    mov [offsetIndex], eax
+                    imul eax, 4
+                    
+                    ; ACCESS ELEMENT
+                    add esi, eax
+
+                    ; STORE ELEMENT VALUE
+                    mov edi, [esi]
+
+                    ; REVERSE OFFSET
+                    sub esi, eax
+
+                    ; add to total
+                    mov eax, [total]
+                    add eax, edi
+                    mov [total], eax
+                    
+                    ; Retrieve 4
+                    mov eax, [j]
+                    mov ebx, [max_z]
 
                     ; LOOP CONDITION4: -HALF WINDOW < HALF_WINDOW + 1
                     inc eax
                     cmp eax, ebx
                     jl loop4
+
                 ; RETRIEVE LOOP VARIABLES 3
                 mov eax, [i]
 
@@ -96,9 +132,27 @@ _add:
                 cmp eax, ebx
                 jl loop3
             
+            ; GET TOTAL
+            mov eax, [total]
+
+            ; GET DIVISOR
+            mov ebx, [ebp+20]
+            imul ebx, ebx
+
+            ; Divide
+            mov edx, 0
+            idiv ebx
+
+            push eax
+            push debug
+            call _printf
+            pop eax
+            pop eax
+
             ; RETRIEVE LOOP VARIABLES 2
             mov eax, [x]
             mov ebx, [max_x] 
+
 
             ; LOOP CONDITION2: HALF WINDOW < IMAGE_SIZE_X - HALF_WINDOW
             inc eax
