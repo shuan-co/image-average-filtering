@@ -138,6 +138,13 @@ _add:
             ; GET DIVISOR
             mov ebx, [ebp+20]
             imul ebx, ebx
+            
+            mov ecx,ebx
+            shr ecx,1
+
+            add eax,ecx
+
+            mov ecx,ebx
 
             ; Divide
             mov edx, 0
