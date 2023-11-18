@@ -26,7 +26,7 @@ _add:
     mov ecx, [ebp+8]       ; Load the array pointer
 
     ; GET HALF WINDOW [ FOR SAMPLING WINDOW ] 
-    mov eax, [ebp+20]
+    mov eax, [ebp+24]
     mov edx, 0
     mov ebx, 2
     idiv ebx
@@ -43,13 +43,13 @@ _add:
     mov [max_z], eax
 
     ; Compute Max X
-    mov eax, [ebp+12]
+    mov eax, [ebp+16]
     sub eax, [half_window]
     mov [max_x], eax
 
 
     ; Compute Max Y
-    mov eax, [ebp+16]
+    mov eax, [ebp+20]
     sub eax, [half_window]
     mov [max_y], eax
 
@@ -95,7 +95,7 @@ _add:
                     mov ebx, [x]
                     add ebx, [j]
 
-                    imul eax, [ebp+12]
+                    imul eax, [ebp+16]
                     add eax, ebx
 
                     mov [offsetIndex], eax
@@ -136,7 +136,7 @@ _add:
             mov eax, [total]
 
             ; GET DIVISOR
-            mov ebx, [ebp+20]
+            mov ebx, [ebp+24]
             imul ebx, ebx
             
             mov ecx,ebx

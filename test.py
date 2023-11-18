@@ -17,7 +17,6 @@ def average_filter(pixel_values, image_size_x, image_size_y, sampling_window_siz
                     index = (y + j) * image_size_x + (x + i)
                     total += pixel_values[index]
             average = round(total / (sampling_window_size ** 2))
-            print(average)
             result[y * image_size_x + x] = average
 
     return result
@@ -30,7 +29,7 @@ array = [1, 4, 0, 1, 3, 1,
          2, 5, 3, 1, 2, 5,
          1, 1, 4, 2, 3, 0]
 
-result = average_filter(array, 6, 6, 5)
+result = average_filter(array, 6, 6, 3)
 # print(result)
 # # Print the result in a 2D format
 # for idx, value in enumerate(result):
