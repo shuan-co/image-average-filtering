@@ -26,5 +26,23 @@ int main()
     add(arr, arr2, image_size_x, image_size_y, sampling_window_size);
 
         printf("Done\n");
+
+
+    printf("Contents of arr1:\n");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+        if ((i + 1) % 6 == 0) {
+            printf("\n");
+        }
+    }
+
+    printf("Contents of arr2:\n");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr2[i]);
+        if ((i + 1) % 6 == 0) {
+            printf("\n");
+        }
+    }
+
     return 0;
 }

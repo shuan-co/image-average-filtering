@@ -30,11 +30,11 @@ array = [1, 4, 0, 1, 3, 1,
          1, 1, 4, 2, 3, 0]
 
 result = average_filter(array, 6, 6, 3)
-# print(result)
-# # Print the result in a 2D format
-# for idx, value in enumerate(result):
-#     if ((idx + 1) % 6) == 0:
-#         print(value, end=" ")
-#         print("")
-#     else:
-#         print(value, end=" ")
+print(result)
+# Print the result in a 2D format
+for idx, value in enumerate(result):
+    if ((idx + 1) % 6) == 0:
+       print(value, end=" ")
+       print("")
+    else:
+       print(value, end=" ")
