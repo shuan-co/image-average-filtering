@@ -20,7 +20,7 @@ int main()
     //  PARAMETERS
     int image_size_x = 6;
     int image_size_y = 6;
-    int sampling_window_size = 5;
+    int sampling_window_size = 3;
 
     // DO NOT TOUCH
     int n = sizeof(arr) / sizeof(arr[0]);

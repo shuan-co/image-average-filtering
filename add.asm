@@ -145,46 +145,20 @@ _add:
 
             add eax,ecx
 
-            ;mov ecx,ebx
+            mov ecx,ebx
 
             ; Divide
             mov edx, 0
             idiv ebx
-
-            push eax
-            push debug
-            call _printf
-            pop eax
-            pop eax
 
             ; Store the average into the second array
             mov edx, [y]
             imul edx, dword [ebp+16]
             add edx, [x]
 
-            ; Debug print after calculating the index
-            ;push edx
-            ;push debug
-            ;call _printf
-            ;add esp, 8
-
-            ;push eax
-            ;push debug
-            ;call _printf
-            ;add esp,8
 
             mov ebx, [ebp+12]  ; Get the base address of arr2
             mov [ebx + edx*4], eax  ; Store the average into arr2
-
-            push edx
-            push debug
-            call _printf
-            add esp, 8
-
-            ;push eax
-            ;push debug
-            ;call _printf
-            ;add esp, 8
 
             sub edx, edx
 
